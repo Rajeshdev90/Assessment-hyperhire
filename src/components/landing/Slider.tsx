@@ -1,29 +1,33 @@
 import React from "react";
-import ReactSlider from "react-slick";
 import Image from "next/image";
 import Avatar from "@/assests/images/user.png";
 import Dallor from "@/assests/svg/icon-dallor.svg";
+import dynamic from "next/dynamic";
+
+const Swipper = dynamic(() => import("../common/Swipper"), {
+  ssr: false,
+});
 
 const SliderCard = () => {
   return (
-    <div className="shadow bg-white p-6 rounded-md flex flex-col gap-4 items-center text-black sm:m-4">
+    <div className="shadow bg-white p-4 rounded-md flex flex-col gap-4 items-center text-black sm:m-4 w-[17rem]">
       <Image
         className="w-100 h-100 rounded-full"
         src={Avatar}
         alt="Rounded avatar"
       ></Image>
-      <h2 className="font-bold text-3xl">Abhishek Gupta</h2>
-      <p className="text-[#4A77FF]">마케팅 · 2y+</p>
-      <div className="flex flex-col flex-wrap gap-2 mt-6 items-center">
-        <p className="p-2 border border-[#C1C5CF] rounded-md">
+      <h2 className="font-bold text-xl m-0">Abhishek Gupta</h2>
+      <p className="text-[#4A77FF] m-0">마케팅 · 2y+</p>
+      <div className="flex flex-col flex-wrap gap-2 mt-2 items-center">
+        <p className="p-1 border border-[#C1C5CF] rounded-md">
           마케팅 콘텐츠 제작
         </p>
-        <p className="p-2 border border-[#C1C5CF] rounded-md">
+        <p className="p-1 border border-[#C1C5CF] rounded-md">
           인스타그램 관리
         </p>
         <div className="flex flex-wrap gap-2">
-          <p className="p-2 border border-[#C1C5CF] rounded-md">트위터 관리</p>
-          <p className="p-2 border border-[#C1C5CF] rounded-md">
+          <p className="p-1 border border-[#C1C5CF] rounded-md">트위터 관리</p>
+          <p className="p-1 border border-[#C1C5CF] rounded-md">
             블로그 글 작성
           </p>
         </div>
@@ -32,38 +36,33 @@ const SliderCard = () => {
   );
 };
 
+let cards = [
+  {
+    key: 1,
+    content: <SliderCard />,
+  },
+  {
+    key: 2,
+    content: <SliderCard />,
+  },
+  {
+    key: 3,
+    content: <SliderCard />,
+  },
+  {
+    key: 4,
+    content: <SliderCard />,
+  },
+  {
+    key: 5,
+    content: <SliderCard />,
+  },
+];
+
 function Slider() {
-  const settings = {
-    className: "center",
-    centerMode: true,
-    infinite: true,
-    centerPadding: "60px",
-    slidesToShow: 1,
-    speed: 500,
-    responsive: [
-      {
-        breakpoint: 1024, // For large screens
-        settings: {
-          centerPadding: "40px", // Less padding for larger screens
-        },
-      },
-      {
-        breakpoint: 768, // For medium screens
-        settings: {
-          centerPadding: "20px", // Less padding for medium screens
-        },
-      },
-      {
-        breakpoint: 640, // For smaller screens
-        settings: {
-          centerPadding: "10px", // Minimal padding for smaller screens
-        },
-      },
-    ],
-  };
   return (
-    <div>
-      <div className="w-full flex  justify-center">
+    <div className="pl-4 relative">
+      <div className="w-full flex  justify-center absolute mb-2">
         <div
           className="talk-bubble_2 tri-right round btm-left-in_2 floatingAnimation"
           data-aos="fade-zoom-in"
@@ -81,12 +80,15 @@ function Slider() {
           </div>
         </div>
       </div>
-      <div className="slider-container px-8">
-        <ReactSlider {...settings}>
-          <SliderCard />
-          <SliderCard />
-          <SliderCard />
-        </ReactSlider>
+      <div className="px-8">
+        <Swipper
+          cards={cards}
+          height="500px"
+          width="100%"
+          margin="0 auto"
+          offset={2}
+          showArrows={false}
+        />
       </div>
     </div>
   );
